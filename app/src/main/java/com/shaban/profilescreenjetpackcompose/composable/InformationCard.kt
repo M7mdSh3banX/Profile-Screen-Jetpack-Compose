@@ -1,0 +1,52 @@
+package com.shaban.profilescreenjetpackcompose.composable
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.shaban.profilescreenjetpackcompose.ui.theme.CardBackgroundColor
+import com.shaban.profilescreenjetpackcompose.ui.theme.PrimaryTextColor
+import com.shaban.profilescreenjetpackcompose.ui.theme.Rubik
+import com.shaban.profilescreenjetpackcompose.ui.theme.SecondaryTextColor
+
+@Composable
+fun InformationCard(
+    title: String,
+    information: String
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        colors = CardDefaults.cardColors(CardBackgroundColor),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(0.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+        ) {
+            Text(
+                text = title,
+                color = SecondaryTextColor,
+                fontFamily = Rubik,
+                fontWeight = FontWeight.Normal,
+                fontSize = 9.sp
+            )
+            Text(
+                text = information,
+                color = PrimaryTextColor,
+                fontFamily = Rubik,
+                fontWeight = FontWeight.Normal,
+                fontSize = 14.sp
+            )
+        }
+    }
+}
