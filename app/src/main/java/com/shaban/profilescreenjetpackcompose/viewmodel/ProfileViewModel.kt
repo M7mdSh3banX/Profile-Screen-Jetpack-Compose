@@ -12,6 +12,13 @@ class ProfileViewModel : ViewModel() {
     private val _state = MutableStateFlow(ProfileUiState())
     val state = _state.asStateFlow()
 
+    init {
+        getUserInfo()
+    }
+
+    fun getUserInfo() =
+        _state.update { it.copy(profilePictureLink = "https://i.pinimg.com/564x/20/0f/50/200f509408e5ae122d1a45d110f2faa2.jpg") }
+
     fun onChangeFirstName(newValue: String) = _state.update { it.copy(firstName = newValue) }
 
     fun onChangeLastName(newValue: String) = _state.update { it.copy(lastName = newValue) }

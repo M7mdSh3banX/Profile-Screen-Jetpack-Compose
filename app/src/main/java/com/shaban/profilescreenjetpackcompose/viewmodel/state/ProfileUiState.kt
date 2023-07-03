@@ -5,5 +5,6 @@ data class ProfileUiState(
     val lastName: String = "",
     val location: String = "",
     val email: String = "",
-    val phone: String = ""
+    val phone: String = "",
+    val profilePictureLink: String = ""
 )
