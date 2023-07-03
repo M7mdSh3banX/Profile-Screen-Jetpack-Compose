@@ -8,12 +8,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.shaban.profilescreenjetpackcompose.R
 import com.shaban.profilescreenjetpackcompose.composable.DefaultButton
 import com.shaban.profilescreenjetpackcompose.composable.Header
@@ -23,9 +26,35 @@ import com.shaban.profilescreenjetpackcompose.composable.SpaceHorizontal16
 import com.shaban.profilescreenjetpackcompose.composable.SpaceVertical24
 import com.shaban.profilescreenjetpackcompose.composable.SpaceVertical32
 import com.shaban.profilescreenjetpackcompose.composable.TextButton
+import com.shaban.profilescreenjetpackcompose.viewmodel.ProfileViewModel
+import com.shaban.profilescreenjetpackcompose.viewmodel.state.ProfileUiState
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    viewModel: ProfileViewModel = hiltViewModel(),
+) {
+    val state by viewModel.state.collectAsState()
+    ProfileContent(
+        state = state,
+        onChangeFirstName = viewModel::onChangeFirstName,
+        onChangeLastName = viewModel::onChangeLastName,
+        onChangeLocation = viewModel::onChangeLocation,
+        onChangeEmail = viewModel::onChangeEmail,
+        onChangePhone = viewModel::onChangePhone,
+        onSaveUserInfo = viewModel::onSaveUserInfo
+    )
+}
+
+@Composable
+private fun ProfileContent(
+    state: ProfileUiState,
+    onChangeFirstName: (String) -> Unit,
+    onChangeLastName: (String) -> Unit,
+    onChangeLocation: (String) -> Unit,
+    onChangeEmail: (String) -> Unit,
+    onChangePhone: (String) -> Unit,
+    onSaveUserInfo: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,23 +77,37 @@ fun ProfileScreen() {
             Box(modifier = Modifier.weight(1F)) {
                 InformationCard(
                     title = stringResource(R.string.first_name),
-                    information = "Mohamed"
+                    information = state.firstName,
+                    onTextChange = onChangeFirstName
                 )
             }
             SpaceHorizontal16()
             Box(modifier = Modifier.weight(1F)) {
                 InformationCard(
                     title = stringResource(R.string.second_name),
-                    information = "Shaban"
+                    information = state.lastName,
+                    onTextChange = onChangeLastName
                 )
             }
         }
-        InformationCard(title = stringResource(R.string.location), information = "Fayoum City")
-        InformationCard(title = stringResource(R.string.email), information = "ms2951@google.com")
-        InformationCard(title = stringResource(R.string.phone), information = "+20 1028946618")
+        InformationCard(
+            title = stringResource(R.string.location),
+            information = state.location,
+            onTextChange = onChangeLocation
+        )
+        InformationCard(
+            title = stringResource(R.string.email),
+            information = state.email,
+            onTextChange = onChangeEmail
+        )
+        InformationCard(
+            title = stringResource(R.string.phone),
+            information = state.phone,
+            onTextChange = onChangePhone
+        )
 
         Spacer(modifier = Modifier.weight(1F))
-        DefaultButton(buttonText = stringResource(R.string.save), onClick = {})
+        DefaultButton(buttonText = stringResource(R.string.save), onClick = onSaveUserInfo)
     }
 }
 
