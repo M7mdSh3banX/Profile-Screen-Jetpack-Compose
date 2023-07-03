@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -13,14 +14,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shaban.profilescreenjetpackcompose.ui.theme.CardBackgroundColor
-import com.shaban.profilescreenjetpackcompose.ui.theme.PrimaryTextColor
 import com.shaban.profilescreenjetpackcompose.ui.theme.Rubik
 import com.shaban.profilescreenjetpackcompose.ui.theme.SecondaryTextColor
 
 @Composable
 fun InformationCard(
     title: String,
-    information: String
+    information: String,
+    onTextChange: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -40,12 +41,9 @@ fun InformationCard(
                 fontWeight = FontWeight.Normal,
                 fontSize = 9.sp
             )
-            Text(
-                text = information,
-                color = PrimaryTextColor,
-                fontFamily = Rubik,
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp
+            BasicTextField(
+                value = information,
+                onValueChange = onTextChange
             )
         }
     }
